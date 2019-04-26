@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/drawer_representant"
-        android:title="¿Quién me representa"
+        android:title="¿Quiénes son mis candidatos?"
         android:icon="@drawable/drawer_location"/>
     <item
         android:id="@+id/drawer_congress_data"
