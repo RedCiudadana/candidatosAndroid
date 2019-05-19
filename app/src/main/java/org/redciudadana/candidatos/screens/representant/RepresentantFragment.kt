@@ -42,7 +42,7 @@ class RepresentantFragment: BaseFragment<RepresentantContract.View, Representant
     }
 
     override fun showDistrictCandidates(district: String) {
-        mActivityView?.showProfiles(district)
+//        mActivityView?.showProfiles(district)
     }
 
     override fun setTitle() {

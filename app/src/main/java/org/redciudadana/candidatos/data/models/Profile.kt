@@ -1,12 +1,24 @@
 package org.redciudadana.candidatos.data.models
 
 import android.os.Parcelable
+import androidx.room.*
+import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
+@Entity(
+    indices = arrayOf(
+        Index(value=["distrito"]),
+        Index(value=["nombre"])
+    ),
+    foreignKeys = arrayOf(
+        ForeignKey(entity = Party::class, parentColumns = ["id"], childColumns = ["partido"])
+    )
+)
+@TypeConverters(ElectionTypeConverter::class)
 data class Profile(
-    val id: String? = null,
+    @PrimaryKey val id: String = "",
     val nombre: String? = null,
     val institucion: String? = null,
     val profesion: String? = null,
@@ -40,7 +52,17 @@ data class Profile(
     val direccion: String? = null,
     val telefono: String? = null,
     val ext: String? = null,
-    val email: String? = null
-) : Parcelable {
+    val email: String? = null,
+    var electionType: ElectionType? = null,
+    @Embedded(prefix = "info_") var profileInfo: ProfileInfo? = ProfileInfo()
+) : Parcelable
 
-}
+
+@Parcelize
+data class ProfileInfo (
+    @Ignore var id: String? = null,
+    var biography: String? = null,
+    @Json(name = "experienciaAcadémica") var experienciaAcademica: String? = null,
+    @Json(name = "historialPolítico") var historialPolitico: String? = null,
+    var planesDeGobiernoURL: String? = null
+): Parcelable

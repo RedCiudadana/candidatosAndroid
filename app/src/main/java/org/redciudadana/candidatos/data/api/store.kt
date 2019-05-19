@@ -5,11 +5,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import eleccionmp.redciudadana.org.eleccionmp.utils.Storage
 import org.redciudadana.candidatos.data.models.Assistance
+import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.HistoryEntry
 import org.redciudadana.candidatos.data.models.Profile
 
 object ModelStorage {
-    private const val diputadosKey = "diputados"
+
     private const val historialKey = "historial"
     private const val assistanceKey = "asistencia"
     private const val votingKey = "votaciones"
@@ -43,19 +44,19 @@ object ModelStorage {
         Storage.setStringPreference(context, key, adapter.toJson(list))
     }
 
-
-    fun getProfileListFromStorage(context: Context): List<Profile>?  = getListFromStorage(
+    fun getProfileListFromStorage(context: Context, key: ElectionType): List<Profile>?  = getListFromStorage(
         context = context,
         classType = Profile::class.java,
-        key = diputadosKey
+        key = key.keyName
     )
 
-    fun saveProfileListToStorage(context: Context, profileList: List<Profile>) = saveListToStorage(
+    fun saveProfileListToStorage(context: Context, key: ElectionType, profileList: List<Profile>) = saveListToStorage(
         context = context,
-        key = diputadosKey,
+        key = key.keyName,
         list = profileList,
         listType = Profile::class.java
     )
+
 
     fun getHistoryEntryList(context: Context): List<HistoryEntry>? = getListFromStorage(
         context = context,

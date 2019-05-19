@@ -79,14 +79,14 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
         mView?.getContext()?.let {
             val cachedHistory = ModelStorage.getHistoryEntryList(it)
             mView?.showHistory(view, filterHistory(cachedHistory, profile))
-            Api.getHistoryEntryList(it) { response, error ->
-                mView?.hideLoading()
-                if (error != null) {
-                    mView?.showError("No se pudo cargar la información")
-                } else {
-                    mView?.updateHistory(filterHistory(response, profile))
-                }
-            }
+//            Api.getHistoryEntryList(it) { response, error ->
+//                mView?.hideLoading()
+//                if (error != null) {
+//                    mView?.showError("No se pudo cargar la información")
+//                } else {
+//                    mView?.updateHistory(filterHistory(response, profile))
+//                }
+//            }
         }
     }
 
@@ -95,14 +95,14 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
         mView?.getContext()?.let {
             val cachedAssistance = ModelStorage.getAssistanceList(it)
             mView?.showAssistance(view, filterAssistance(cachedAssistance, profile))
-            Api.getAssistanceList(it) { response, error ->
-                mView?.hideLoading()
-                if (error != null) {
-                    mView?.showError("No se pudo cargar la información")
-                } else {
-                    mView?.updateAssistance(filterAssistance(response, profile))
-                }
-            }
+//            Api.getAssistanceList(it) { response, error ->
+//                mView?.hideLoading()
+//                if (error != null) {
+//                    mView?.showError("No se pudo cargar la información")
+//                } else {
+//                    mView?.updateAssistance(filterAssistance(response, profile))
+//                }
+//            }
         }
     }
 
@@ -111,14 +111,14 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
         mView?.getContext()?.let {
             val cachedVoting = filterVoting(ModelStorage.getVotingList(it), profile)
             mView?.showVoting(view, cachedVoting)
-            Api.getVotingList(it) { response, error ->
-                mView?.hideLoading()
-                if (error != null) {
-                    mView?.showError("No se pudo cargar la información")
-                } else {
-                    mView?.updateVoting(filterVoting(response, profile))
-                }
-            }
+//            Api.getVotingList(it) { response, error ->
+//                mView?.hideLoading()
+//                if (error != null) {
+//                    mView?.showError("No se pudo cargar la información")
+//                } else {
+//                    mView?.updateVoting(filterVoting(response, profile))
+//                }
+//            }
         }
     }
 

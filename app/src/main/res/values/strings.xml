@@ -9,7 +9,7 @@
     
     <!-- menu -->
     <string name="menu_diputados">Diputados</string>
-    <string name="menu_representante">¿Quién me representa?</string>
+    <string name="menu_representante">¿Quiénes son mis candidatos?</string>
     <string name="menu_congreso_datos">Congreso en datos</string>
     <string name="menu_noticias">Últimas noticias</string>
 

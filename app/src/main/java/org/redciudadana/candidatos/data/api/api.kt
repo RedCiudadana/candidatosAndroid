@@ -1,16 +1,17 @@
 package org.redciudadana.candidatos.data.api
 
 import android.content.Context
-import org.redciudadana.candidatos.data.models.Assistance
-import org.redciudadana.candidatos.data.models.HistoryEntry
+import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Profile
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
-val BASE_URL = "https://raw.githubusercontent.com/RedCiudadana/Congreso/gh-pages/static-files/"
+val BASE_URL = "https://raw.githubusercontent.com/RedCiudadana/CandiDatos2/master/public/static-files/"
 
 private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
@@ -20,63 +21,62 @@ private val retrofit = Retrofit.Builder()
 val api: IApi = retrofit.create(IApi::class.java)
 
 
-fun <T> apiCallGet(context: Context, getFromStorage: (Context) -> T?, setToStorage: (Context, T) -> Unit,
-                   apiCall: () -> Call<T>, callback: ((T?, Throwable?) -> Unit)?) {
+suspend fun <T> apiCallGet(apiCall: () -> Call<T>): T? {
     val callResponse = apiCall()
-    callResponse.enqueue(object: Callback<T> {
-        override fun onFailure(call: Call<T>, t: Throwable) {
-            val persistedData = getFromStorage(context)
-            if (persistedData != null) {
-                if (callback != null) callback(persistedData, null)
-            } else {
-                if (callback != null) callback(null, t)
+    val response = suspendCoroutine<T?> { continuation ->
+        callResponse.enqueue(object: Callback<T> {
+            override fun onFailure(call: Call<T>, t: Throwable) {
+                continuation.resumeWith(Result.failure(t))
             }
-        }
 
-        override fun onResponse(call: Call<T>, response: Response<T>) {
-            val body = response.body()
-            if (body != null) {
-                setToStorage(context, body)
+            override fun onResponse(call: Call<T>, response: Response<T>) {
+                val body = response.body()
+                continuation.resume(body)
             }
-            if (callback != null) {
-                callback(body, null)
-            }
-        }
-    })
+        })
+    }
+    return response
 }
 
 
 object Api {
 
-    fun getProfiles(context: Context, callback: ((List<Profile>?, Throwable?) -> Unit)?) = apiCallGet(
-        context = context,
-        getFromStorage = ModelStorage::getProfileListFromStorage,
-        setToStorage = ModelStorage::saveProfileListToStorage,
-        apiCall = api::getProfiles,
-        callback = callback
+    suspend fun getProfiles(electionType: ElectionType): List<Profile>? {
+        val listing = apiCallGet(
+            apiCall = {
+                when (electionType) {
+                    ElectionType.PRESIDENT -> api.getPresidentProfiles()
+                    ElectionType.VICEPRESIDENT -> api.getVicepresidentProfiles()
+                    ElectionType.DISTRICT -> api.getDistrictProfiles()
+                    ElectionType.MAYOR -> api.getMayorProfiles()
+                    ElectionType.NATIONAL_LISTING -> api.getListingProfiles()
+                    ElectionType.PARLACEN -> api.getParlacenProfiles()
+                }
+            }
+        )
+        listing?.forEach {
+            it.electionType = electionType
+        }
+        return listing
+    }
+
+    suspend fun getHistoryEntryList() = apiCallGet(
+        apiCall = api::getHistory
     )
 
-    fun getHistoryEntryList(context: Context, callback: ((List<HistoryEntry>?, Throwable?) -> Unit)?) = apiCallGet(
-        context = context,
-        getFromStorage = ModelStorage::getHistoryEntryList,
-        setToStorage = ModelStorage::saveHistoryEntryList,
-        apiCall = api::getHistory,
-        callback = callback
+    suspend fun getAssistanceList() = apiCallGet(
+        apiCall = api::getAssistance
     )
 
-    fun getAssistanceList(context: Context, callback: ((List<Assistance>?, Throwable?) -> Unit)?) = apiCallGet(
-        context = context,
-        getFromStorage = ModelStorage::getAssistanceList,
-        setToStorage = ModelStorage::saveAssistanceList,
-        apiCall = api::getAssistance,
-        callback = callback
+    suspend fun getVotingList() = apiCallGet(
+        apiCall = api::getVoting
     )
 
-    fun getVotingList(context: Context, callback: ((List<Map<String, String>>?, Throwable?) -> Unit)?) = apiCallGet(
-        context = context,
-        getFromStorage = ModelStorage::getVotingList,
-        setToStorage = ModelStorage::saveVotingList,
-        apiCall = api::getVoting,
-        callback = callback
-    )
+    suspend fun getInfoDistrict() = apiCallGet(api::getInfoDistrict)
+    suspend fun getInfoListing() = apiCallGet(api::getInfoListing)
+    suspend fun getInfoMayor() = apiCallGet(api::getInfoMayor)
+    suspend fun getInfoParlacen() = apiCallGet(api::getInfoParlacen)
+    suspend fun getInfoPresident() = apiCallGet(api::getInfoPresident)
+    suspend fun getInfoVicepresident() = apiCallGet(api::getInfoVicepresident)
+    suspend fun getPartyList() = apiCallGet(api::getPartyList)
 }

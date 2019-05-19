@@ -8,18 +8,6 @@
     android:layout_marginVertical="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:id="@+id/menu_item_diputados"
-        style="@style/Menu.Element"
-        android:background="@drawable/rounded_shape_orange">
-        <ImageView
-            style="@style/Menu.Image"
-            android:src="@drawable/round_diputados" />
-        <TextView
-            style="@style/Menu.Text"
-            android:text="@string/menu_diputados"
-            />
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/menu_item_mi_representante"
         style="@style/Menu.Element"
         android:background="@drawable/rounded_shape_light_blue">

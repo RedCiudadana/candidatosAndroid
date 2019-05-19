@@ -21,9 +21,6 @@ class MenuFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = getString(R.string.title_menu)
-        menu_item_diputados.setOnClickListener {
-            mainView.showProfiles()
-        }
 
         menu_item_mi_representante.setOnClickListener {
             mainView.showElectionTypes()

@@ -12,9 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 import org.redciudadana.candidatos.R
+import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Profile
+import org.redciudadana.candidatos.events.Events
 import org.redciudadana.candidatos.screens.diputado.DiputadoFragment
 import org.redciudadana.candidatos.screens.diputados.DiputadosContract
 import org.redciudadana.candidatos.screens.diputados.DiputadosFragment
@@ -22,7 +25,7 @@ import org.redciudadana.candidatos.screens.electiontype.ElectionTypesFragment
 import org.redciudadana.candidatos.screens.menu.MenuFragment
 import org.redciudadana.candidatos.screens.news.NewsFragment
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity(), MainView, Events.Listener {
 
 
     private var mDrawerToggle: ActionBarDrawerToggle? = null
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Events.registerListener(Events.EventType.UPDATE_ERROR, this)
         initializeDrawer()
         if (savedInstanceState == null) {
             showMainMenu()
@@ -153,7 +157,7 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showElectionType(electionType: ElectionType) {
-        if (arrayOf(ElectionType.DISTRICT, ElectionType.MUNICIPAL).contains(electionType)) {
+        if (arrayOf(ElectionType.DISTRICT, ElectionType.MAYOR).contains(electionType)) {
             showDistricts(electionType)
         } else {
             showProfiles(electionType)
@@ -182,12 +186,18 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showError(title: String, message: String) {
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("Aceptar") { _, _ -> }
-            .show()
+        uiScope.launch {
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Aceptar") { _, _ -> }
+                .show()
+        }
 
+    }
+
+    override fun onEvent(eventType: Events.EventType) {
+        showError("Problema de conexión", "No pudimos obtener los últimos datos")
     }
 
     override fun setOnBackListener(listener: () -> Boolean) {
