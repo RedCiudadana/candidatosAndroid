@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
 @Entity(
     indices = arrayOf(
         Index(value=["distrito"]),
-        Index(value=["nombre"])
+        Index(value=["nombre"]),
+        Index(value=["partido"])
     ),
     foreignKeys = arrayOf(
         ForeignKey(entity = Party::class, parentColumns = ["id"], childColumns = ["partido"])
@@ -21,6 +22,7 @@ data class Profile(
     @PrimaryKey val id: String = "",
     val nombre: String? = null,
     val institucion: String? = null,
+    val partido: String? = null,
     val profesion: String? = null,
     val educacion: String? = null,
     val edad: String? = null,

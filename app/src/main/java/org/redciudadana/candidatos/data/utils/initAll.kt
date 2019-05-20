@@ -11,6 +11,12 @@ import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.data.models.ProfileInfo
 import org.redciudadana.candidatos.events.Events
 
+suspend fun getPartyList() {
+    Api.getPartyList()?.let {
+        db.partyDao().insertParties(it)
+    }
+}
+
 suspend fun getProfilesAndInfo(electionType: ElectionType, dataFunction: suspend () -> List<ProfileInfo>?) {
     val apiProfiles = Api.getProfiles(electionType)
     if (apiProfiles != null) {
@@ -36,6 +42,7 @@ fun updateProfiles(profileInfoList: List<ProfileInfo>?) {
 fun fetchAll(context: Context) {
     bgScope.launch {
         try {
+            getPartyList()
             getProfilesAndInfo(ElectionType.PRESIDENT, Api::getInfoPresident)
             getProfilesAndInfo(ElectionType.VICEPRESIDENT, Api::getInfoVicepresident)
             getProfilesAndInfo(ElectionType.DISTRICT, Api::getInfoDistrict)

@@ -1,4 +1,4 @@
-package org.redciudadana.candidatos.screens.representant
+package org.redciudadana.candidatos.screens.districts
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,9 @@ import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.BaseFragment
 import java.lang.ref.WeakReference
 
-class RepresentantFragment: BaseFragment<RepresentantContract.View, RepresentantContract.Presenter, MainView>(), RepresentantContract.View {
+class DistrictsFragment: BaseFragment<DistrictsContract.View, DistrictsContract.Presenter, MainView>(), DistrictsContract.View {
 
-    override var mPresenter: RepresentantContract.Presenter = RepresentantPresenter()
+    override var mPresenter: DistrictsContract.Presenter = DistrictsPresenter()
 
     var mDistrictAdapter: WeakReference<DistrictsAdapter>? = null
 
@@ -46,6 +46,6 @@ class RepresentantFragment: BaseFragment<RepresentantContract.View, Representant
     }
 
     override fun setTitle() {
-        mActivityView?.setTitle("¿Quién es mi representante?")
+        mActivityView?.setTitle("Selecciona tu distrito")
     }
 }

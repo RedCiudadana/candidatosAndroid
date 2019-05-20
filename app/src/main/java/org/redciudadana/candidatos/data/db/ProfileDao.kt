@@ -19,4 +19,8 @@ interface ProfileDao {
 
     @Update
     fun updateProfile(profile: Profile)
+
+    @TypeConverters(ElectionTypeConverter::class)
+    @Query("select distinct distrito from profile where electionType = 'DISTRICT' and distrito != '' order by distrito")
+    fun getDistricts(): List<String>
 }

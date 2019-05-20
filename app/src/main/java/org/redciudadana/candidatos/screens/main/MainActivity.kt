@@ -21,6 +21,7 @@ import org.redciudadana.candidatos.events.Events
 import org.redciudadana.candidatos.screens.diputado.DiputadoFragment
 import org.redciudadana.candidatos.screens.diputados.DiputadosContract
 import org.redciudadana.candidatos.screens.diputados.DiputadosFragment
+import org.redciudadana.candidatos.screens.districts.DistrictsFragment
 import org.redciudadana.candidatos.screens.electiontype.ElectionTypesFragment
 import org.redciudadana.candidatos.screens.menu.MenuFragment
 import org.redciudadana.candidatos.screens.news.NewsFragment
@@ -157,15 +158,19 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
     }
 
     override fun showElectionType(electionType: ElectionType) {
-        if (arrayOf(ElectionType.DISTRICT, ElectionType.MAYOR).contains(electionType)) {
-            showDistricts(electionType)
+        if (electionType === ElectionType.DISTRICT) {
+            showDistricts()
+        }
+        else if (ElectionType.MAYOR === electionType) {
+            showDepartments()
         } else {
             showProfiles(electionType)
         }
     }
 
-    override fun showDistricts(electionType: ElectionType) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showDistricts() {
+        val fragment = DistrictsFragment()
+        changeFragment(fragment, true)
     }
 
     override fun showProfiles(electionType: ElectionType) {
@@ -177,6 +182,18 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
     }
 
     override fun showProfiles(electionType: ElectionType, district: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showProfiles(electionType: ElectionType, department: String, municipality: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showDepartments() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showMunicipalities() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

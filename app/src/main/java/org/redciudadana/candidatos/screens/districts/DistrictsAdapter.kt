@@ -1,4 +1,4 @@
-package org.redciudadana.candidatos.screens.representant
+package org.redciudadana.candidatos.screens.districts
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class DistrictsAdapter(
-    private val representant: RepresentantContract.View,
-    private val presenter: RepresentantContract.Presenter,
+    private val representant: DistrictsContract.View,
+    private val presenter: DistrictsContract.Presenter,
     districts: List<String>?) : RecyclerView.Adapter<DistrictsAdapter.ViewHolder>() {
 
 

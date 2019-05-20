@@ -1,9 +1,9 @@
-package org.redciudadana.candidatos.screens.representant
+package org.redciudadana.candidatos.screens.districts
 
 import org.redciudadana.candidatos.utils.mvp.IPresenter
 import org.redciudadana.candidatos.utils.mvp.IView
 
-object RepresentantContract {
+object DistrictsContract {
     interface View: IView {
         fun initDistrictList(list: List<String>?)
         fun updateDistrictList(list: List<String>?)
