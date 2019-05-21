@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_representant.*
 import org.redciudadana.candidatos.R
+import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.BaseFragment
 import java.lang.ref.WeakReference
@@ -42,7 +43,7 @@ class DistrictsFragment: BaseFragment<DistrictsContract.View, DistrictsContract.
     }
 
     override fun showDistrictCandidates(district: String) {
-//        mActivityView?.showProfiles(district)
+        mActivityView?.showProfiles(ElectionType.DISTRICT, district)
     }
 
     override fun setTitle() {

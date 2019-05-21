@@ -9,7 +9,7 @@ import org.redciudadana.candidatos.utils.views.ActivityView
 /**
  * Created by javier on 1/24/18.
  */
-abstract class BaseFragment<in V : IView, T : IPresenter<V>, A: ActivityView> : Fragment(), IView {
+abstract class BaseFragment<in V : IView<A>, T : IPresenter<V>, A: ActivityView> : Fragment(), IView<A> {
 
     protected abstract var mPresenter: T
     protected var mActivityView: A? = null
@@ -27,6 +27,10 @@ abstract class BaseFragment<in V : IView, T : IPresenter<V>, A: ActivityView> : 
         @Suppress("UNCHECKED_CAST")
         mPresenter.attachView(this as V)
         mPresenter.onViewCreated()
+    }
+
+    override fun getActivityView(): A? {
+        return mActivityView
     }
 
     override fun onResume() {

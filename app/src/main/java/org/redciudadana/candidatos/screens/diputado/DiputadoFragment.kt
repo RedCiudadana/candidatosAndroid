@@ -42,7 +42,7 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
     var mVotingAdapter: WeakReference<DiputadoVotingAdapter>? = null
 
     override fun setTitle() {
-        mActivityView?.setTitle("Diputado")
+        mActivityView?.setTitle("Candidato")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

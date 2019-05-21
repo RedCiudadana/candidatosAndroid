@@ -1,4 +1,4 @@
-package org.redciudadana.candidatos.screens.diputados
+package org.redciudadana.candidatos.screens.profiles
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -29,12 +29,12 @@ class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
 }
 
-class DiputadosAdapter(
+class ProfilesAdapter(
     private val context: Context,
-    private val candidateView: DiputadosContract.View,
+    private val candidateView: ProfilesContract.View,
     diputados: List<Profile>?) : RecyclerView.Adapter<ViewHolder>() {
 
-    var diputados: List<Profile>? = sortProfiles(diputados)
+    var profiles: List<Profile>? = sortProfiles(diputados)
         set(value) {
             field = sortProfiles(value)
             notifyDataSetChanged()
@@ -47,21 +47,21 @@ class DiputadosAdapter(
 
 
     override fun getItemCount(): Int {
-        return diputados?.size ?: 0
+        return profiles?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val candidate = diputados?.get(position)
-        if (candidate != null) {
+        val profile = profiles?.get(position)
+        if (profile != null) {
             GlideApp
                 .with(context)
-                .load(candidate.fotoUrl)
+                .load(profile.fotoUrl)
                 .transform(RoundCornerTransformation(context.resources))
                 .into(holder.candidateImage)
-            holder.candidateText.text = candidate.nombre
-            holder.candidatePartido.text = candidate.partidoactual
+            holder.candidateText.text = profile.nombre
+            holder.candidatePartido.text = profile.partidoactual
             holder.onClickListener = View.OnClickListener {
-                candidateView.onCandidateSelected(candidate)
+                candidateView.onCandidateSelected(profile)
             }
         }
     }

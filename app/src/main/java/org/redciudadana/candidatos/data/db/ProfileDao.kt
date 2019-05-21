@@ -11,6 +11,10 @@ interface ProfileDao {
     @Query("select * from profile where electionType = :electionType")
     fun getProfilesFor(electionType: ElectionType): List<Profile>
 
+    @TypeConverters(ElectionTypeConverter::class)
+    @Query("select * from profile where electionType = :electionType and distrito = :district")
+    fun getProfilesFor(electionType: ElectionType, district: String): List<Profile>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProfiles(profiles: List<Profile>)
 

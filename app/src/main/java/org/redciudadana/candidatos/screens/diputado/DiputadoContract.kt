@@ -4,13 +4,14 @@ import org.redciudadana.candidatos.data.models.Assistance
 import org.redciudadana.candidatos.data.models.HistoryEntry
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.data.models.Voting
+import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.IPresenter
 import org.redciudadana.candidatos.utils.mvp.IView
 
 object DiputadoContract {
     val options = arrayOf("Información general", "Historial político", "Asistencia", "Votación")
 
-    interface View: IView {
+    interface View: IView<MainView> {
         fun showProfile(profile: Profile)
         fun onOptionPress(view: android.view.View, position: Int?)
         fun showGeneralInformation(view: android.view.View, profile: Profile)

@@ -19,8 +19,8 @@ import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.events.Events
 import org.redciudadana.candidatos.screens.diputado.DiputadoFragment
-import org.redciudadana.candidatos.screens.diputados.DiputadosContract
-import org.redciudadana.candidatos.screens.diputados.DiputadosFragment
+import org.redciudadana.candidatos.screens.profiles.ProfilesContract
+import org.redciudadana.candidatos.screens.profiles.ProfilesFragment
 import org.redciudadana.candidatos.screens.districts.DistrictsFragment
 import org.redciudadana.candidatos.screens.electiontype.ElectionTypesFragment
 import org.redciudadana.candidatos.screens.menu.MenuFragment
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
     }
 
     override fun showProfiles() {
-        val fragment = DiputadosFragment()
+        val fragment = ProfilesFragment()
         changeFragment(fragment, true)
     }
 
@@ -173,16 +173,23 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
         changeFragment(fragment, true)
     }
 
-    override fun showProfiles(electionType: ElectionType) {
-        val fragment = DiputadosFragment()
-        val args = Bundle()
-        args.putSerializable(DiputadosContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
+    private fun showProfiles(args: Bundle? = null) {
+        val fragment = ProfilesFragment()
         fragment.arguments = args
         changeFragment(fragment, true)
     }
 
+    override fun showProfiles(electionType: ElectionType) {
+        val args = Bundle()
+        args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
+        showProfiles(args)
+    }
+
     override fun showProfiles(electionType: ElectionType, district: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val args = Bundle()
+        args.putString(ProfilesContract.DISTRICT_BUNDLE_ARG, district)
+        args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
+        showProfiles(args)
     }
 
     override fun showProfiles(electionType: ElectionType, department: String, municipality: String) {
