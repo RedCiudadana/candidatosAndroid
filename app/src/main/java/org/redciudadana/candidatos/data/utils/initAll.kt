@@ -52,7 +52,7 @@ fun fetchAll(context: Context) {
             Events.onEvent(Events.EventType.PROFILES_UPDATED)
         } catch (error: Exception) {
             Events.onEvent(Events.EventType.UPDATE_ERROR)
-            Log.e("INIT", "$error")
+            Log.e("initAll", "$error")
         }
     }
 }

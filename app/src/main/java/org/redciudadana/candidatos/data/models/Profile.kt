@@ -49,12 +49,13 @@ data class Profile(
     val tw: String? = null,
     val fb: String? = null,
     val fotoUrlPartido: String? = null,
-    val fotoUrl: String? = null,
+    @Json(name = "fotoURL") val fotoUrl: String? = null,
     val Contacto: String? = null,
     val direccion: String? = null,
     val telefono: String? = null,
     val ext: String? = null,
     val email: String? = null,
+    @Json(name = "nombrePartido (noEmber)") var nombrePartido: String? = null,
     var electionType: ElectionType? = null,
     @Embedded(prefix = "info_") var profileInfo: ProfileInfo? = ProfileInfo()
 ) : Parcelable

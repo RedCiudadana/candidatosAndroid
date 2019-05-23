@@ -1,6 +1,8 @@
 package org.redciudadana.candidatos.data.api
 
 import android.content.Context
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Profile
 import retrofit2.Call
@@ -11,11 +13,16 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-val BASE_URL = "https://raw.githubusercontent.com/RedCiudadana/CandiDatos2/master/public/static-files/"
+
+val BASE_URL = "https://cdn.jsdelivr.net/gh/RedCiudadana/CandiDatos2@gh-pages/static-files/"
+
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
 
 private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
-    .addConverterFactory(MoshiConverterFactory.create())
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .build()
 
 val api: IApi = retrofit.create(IApi::class.java)

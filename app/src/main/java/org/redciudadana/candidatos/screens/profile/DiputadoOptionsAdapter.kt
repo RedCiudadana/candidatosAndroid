@@ -1,4 +1,4 @@
-package org.redciudadana.candidatos.screens.diputado
+package org.redciudadana.candidatos.screens.profile
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_diputado_option.view.*
 import org.redciudadana.candidatos.R
-import org.redciudadana.candidatos.screens.diputado.DiputadoContract.options
+import org.redciudadana.candidatos.screens.profile.DiputadoContract.options
 import org.redciudadana.candidatos.utils.glide.GlideApp
 
 class ViewHolder(val view: View) {

@@ -1,4 +1,4 @@
-package org.redciudadana.candidatos.screens.diputado
+package org.redciudadana.candidatos.screens.profile
 
 import org.redciudadana.candidatos.data.models.Assistance
 import org.redciudadana.candidatos.data.models.HistoryEntry

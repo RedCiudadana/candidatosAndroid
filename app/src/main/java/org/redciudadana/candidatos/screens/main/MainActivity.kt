@@ -18,7 +18,7 @@ import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.events.Events
-import org.redciudadana.candidatos.screens.diputado.DiputadoFragment
+import org.redciudadana.candidatos.screens.profile.DiputadoFragment
 import org.redciudadana.candidatos.screens.profiles.ProfilesContract
 import org.redciudadana.candidatos.screens.profiles.ProfilesFragment
 import org.redciudadana.candidatos.screens.districts.DistrictsFragment

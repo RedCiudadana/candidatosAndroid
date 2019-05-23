@@ -4,7 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.redciudadana.candidatos.data.models.HistoryEntry
 import org.redciudadana.candidatos.data.models.Profile
-import org.redciudadana.candidatos.screens.diputado.DiputadoPresenter
+import org.redciudadana.candidatos.screens.profile.DiputadoPresenter
 
 class DiputadoFragmentTest {
     @Test

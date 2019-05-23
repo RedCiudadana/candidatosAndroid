@@ -1,4 +1,4 @@
-package org.redciudadana.candidatos.screens.diputado
+package org.redciudadana.candidatos.screens.profile
 
 import android.os.Build
 import android.os.Bundle

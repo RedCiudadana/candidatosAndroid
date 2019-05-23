@@ -1,7 +1,6 @@
-package org.redciudadana.candidatos.screens.diputado
+package org.redciudadana.candidatos.screens.profile
 
 import android.view.View
-import org.redciudadana.candidatos.data.api.Api
 import org.redciudadana.candidatos.data.api.ModelStorage
 import org.redciudadana.candidatos.data.models.Assistance
 import org.redciudadana.candidatos.data.models.HistoryEntry
