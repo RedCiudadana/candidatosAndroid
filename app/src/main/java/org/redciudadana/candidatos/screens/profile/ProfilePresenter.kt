@@ -1,7 +1,12 @@
 package org.redciudadana.candidatos.screens.profile
 
 import android.view.View
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import org.redciudadana.candidatos.coroutines.bgDispatcher
+import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.api.ModelStorage
+import org.redciudadana.candidatos.data.db.db
 import org.redciudadana.candidatos.data.models.Assistance
 import org.redciudadana.candidatos.data.models.HistoryEntry
 import org.redciudadana.candidatos.data.models.Profile
@@ -14,11 +19,25 @@ import org.redciudadana.candidatos.utils.openUrl
 val numberRegex = Regex("""(\d+)""")
 
 class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.Presenter {
-    val profile: Profile
-    get() = mView?.getArguments()?.getParcelable(MainView.ARG_DIPUTADO) as Profile
+    lateinit var profile: Profile
+
 
     override fun onViewCreated() {
-        mView?.showProfile(profile)
+        uiScope.launch {
+            profile = mView?.getArguments()?.getParcelable(MainView.ARG_DIPUTADO) as Profile
+            mView?.showProfile(profile)
+            val party = async(bgDispatcher) {
+                val partido = profile.partido
+                if (partido != null) {
+                    db.partyDao().getById(partido)
+                } else {
+                    null
+                }
+            }
+            party.await()?.let {
+                mView?.showParty(it)
+            }
+        }
 
     }
 
@@ -57,6 +76,9 @@ class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.
 
     private fun buildTwitterUrl(twitterAccount: String?): String? {
         if (twitterAccount != null && !twitterAccount.isEmpty()) {
+            if (twitterAccount.contains("twitter.com")) {
+                return twitterAccount
+            }
             return String.format("https://twitter.com/%s", twitterAccount)
         }
         return null

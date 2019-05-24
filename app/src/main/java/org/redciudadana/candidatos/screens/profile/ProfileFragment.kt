@@ -24,10 +24,7 @@ import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
 import kotlinx.android.synthetic.main.fragment_diputado_history.*
 import kotlinx.android.synthetic.main.fragment_diputado_voting.*
 import org.redciudadana.candidatos.R
-import org.redciudadana.candidatos.data.models.Assistance
-import org.redciudadana.candidatos.data.models.HistoryEntry
-import org.redciudadana.candidatos.data.models.Profile
-import org.redciudadana.candidatos.data.models.Voting
+import org.redciudadana.candidatos.data.models.*
 import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.glide.GlideApp
 import org.redciudadana.candidatos.utils.glide.RoundCornerTransformation
@@ -109,16 +106,21 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
                 .load(profile.fotoUrl)
                 .transform(RoundCornerTransformation(it.resources))
                 .into(diputado_face_image)
-            GlideApp
-                .with(it)
-                .load(profile.fotoUrlPartido)
-                .into(diputado_partido_image)
         }
         diputado_name.text = profile.nombre
         diputado_department.text = profile.distrito
         button_facebook.setOnClickListener { mPresenter.onFacebookPress() }
         button_twitter.setOnClickListener { mPresenter.onTwitterPress() }
         button_call.setOnClickListener { mPresenter.onPhonePress() }
+    }
+
+    override fun showParty(party: Party) {
+        context?.let {
+            GlideApp
+                .with(it)
+                .load(party.logoUrl)
+                .into(diputado_partido_image)
+        }
     }
 
     override fun onOptionPress(view: View, position: Int?) {

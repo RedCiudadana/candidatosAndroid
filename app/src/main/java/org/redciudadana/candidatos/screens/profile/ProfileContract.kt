@@ -1,9 +1,6 @@
 package org.redciudadana.candidatos.screens.profile
 
-import org.redciudadana.candidatos.data.models.Assistance
-import org.redciudadana.candidatos.data.models.HistoryEntry
-import org.redciudadana.candidatos.data.models.Profile
-import org.redciudadana.candidatos.data.models.Voting
+import org.redciudadana.candidatos.data.models.*
 import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.IPresenter
 import org.redciudadana.candidatos.utils.mvp.IView
@@ -13,6 +10,7 @@ object ProfileContract {
 
     interface View: IView<MainView> {
         fun showProfile(profile: Profile)
+        fun showParty(party: Party)
         fun onOptionPress(view: android.view.View, position: Int?)
         fun showGeneralInformation(view: android.view.View, profile: Profile)
         fun showHistory(view: android.view.View, historyEntryList: List<HistoryEntry>?)

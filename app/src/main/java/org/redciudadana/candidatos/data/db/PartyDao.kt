@@ -12,6 +12,9 @@ interface PartyDao {
     @Query("select * from party")
     fun getAll(): List<Party>
 
+    @Query("select * from party where party.id = :id")
+    fun getById(id: String): Party
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertParties(parties: List<Party>)
 }
