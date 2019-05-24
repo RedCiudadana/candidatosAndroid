@@ -34,9 +34,9 @@ class ProfilesAdapter(
     private val candidateView: ProfilesContract.View,
     diputados: List<Profile>?) : RecyclerView.Adapter<ViewHolder>() {
 
-    var profiles: List<Profile>? = sortProfiles(diputados)
+    var profiles: List<Profile>? = diputados
         set(value) {
-            field = sortProfiles(value)
+            field = value
             notifyDataSetChanged()
         }
 
@@ -57,9 +57,11 @@ class ProfilesAdapter(
                 .with(context)
                 .load(profile.fotoUrl)
                 .transform(RoundCornerTransformation(context.resources))
+                .fallback(R.drawable.profile)
+                .error(R.drawable.profile)
                 .into(holder.candidateImage)
             holder.candidateText.text = profile.nombre
-            holder.candidatePartido.text = profile.partidoactual
+            holder.candidatePartido.text = profile.nombrePartido
             holder.onClickListener = View.OnClickListener {
                 candidateView.onCandidateSelected(profile)
             }

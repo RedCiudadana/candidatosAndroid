@@ -4,6 +4,7 @@ import kotlinx.coroutines.launch
 import org.redciudadana.candidatos.coroutines.bgScope
 import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.db.db
+import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.utils.mvp.BasePresenter
 
 class DistrictsPresenter: BasePresenter<DistrictsContract.View>(), DistrictsContract.Presenter {
@@ -24,7 +25,7 @@ class DistrictsPresenter: BasePresenter<DistrictsContract.View>(), DistrictsCont
     }
 
     override fun onDistrictSelect(district: String) {
-        mView?.showDistrictCandidates(district)
+        mView?.getActivityView()?.showParties(ElectionType.DISTRICT, district = district)
     }
 
 }

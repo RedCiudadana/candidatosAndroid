@@ -32,6 +32,11 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
     fun presentElectionType(electionType: ElectionType) = bgScope.launch {
         setTitle(electionType)
         val profiles = db.profileDao().getProfilesFor(electionType)
+            .map {
+                it.profile.nombrePartido = it.partyName
+                it.profile
+            }
+
         presentProfiles(profiles)
     }
 

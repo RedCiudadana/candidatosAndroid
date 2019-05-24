@@ -10,8 +10,11 @@ class ElectionTypesPresenter: BasePresenter<ElectionTypesContract.View>(), Elect
 
     override fun onElectionTypeSelect(electionType: ElectionType) {
         when (electionType) {
-            ElectionType.PRESIDENT, ElectionType.VICEPRESIDENT, ElectionType.NATIONAL_LISTING -> {
+            ElectionType.PRESIDENT, ElectionType.VICEPRESIDENT-> {
                 mView?.getActivityView()?.showProfiles(electionType)
+            }
+            ElectionType.NATIONAL_LISTING -> {
+                mView?.getActivityView()?.showParties(electionType)
             }
             ElectionType.DISTRICT -> mView?.getActivityView()?.showDistricts()
             else -> return

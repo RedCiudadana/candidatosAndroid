@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_representant.*
+import kotlinx.android.synthetic.main.fragment_recycler.*
 import org.redciudadana.candidatos.R
 import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.BaseFragment
+import org.redciudadana.candidatos.utils.views.initializeRecycler
 import java.lang.ref.WeakReference
 
 class DistrictsFragment: BaseFragment<DistrictsContract.View, DistrictsContract.Presenter, MainView>(), DistrictsContract.View {
@@ -20,20 +19,12 @@ class DistrictsFragment: BaseFragment<DistrictsContract.View, DistrictsContract.
     var mDistrictAdapter: WeakReference<DistrictsAdapter>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_representant, container, false)
+        return inflater.inflate(R.layout.fragment_recycler, container, false)
     }
     override fun initDistrictList(list: List<String>?) {
-        val mLayoutManager = LinearLayoutManager(context)
+        initializeRecycler(context, recycler_view)
         val districtsAdapter = DistrictsAdapter(this, mPresenter, list)
-        representant_list.setHasFixedSize(true)
-        representant_list.layoutManager = mLayoutManager
-        representant_list.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                mLayoutManager.orientation
-            )
-        )
-        representant_list.adapter = districtsAdapter
+        recycler_view.adapter = districtsAdapter
         mDistrictAdapter = WeakReference(districtsAdapter)
 
     }
@@ -43,7 +34,7 @@ class DistrictsFragment: BaseFragment<DistrictsContract.View, DistrictsContract.
     }
 
     override fun showDistrictCandidates(district: String) {
-        mActivityView?.showProfiles(ElectionType.DISTRICT, district)
+        mActivityView?.showParties(ElectionType.DISTRICT, district)
     }
 
     override fun setTitle() {

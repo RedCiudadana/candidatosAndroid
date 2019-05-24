@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import org.redciudadana.candidatos.R
 import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.models.ElectionType
+import org.redciudadana.candidatos.data.models.Party
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.events.Events
 import org.redciudadana.candidatos.screens.profile.DiputadoFragment
@@ -25,6 +26,8 @@ import org.redciudadana.candidatos.screens.districts.DistrictsFragment
 import org.redciudadana.candidatos.screens.electiontype.ElectionTypesFragment
 import org.redciudadana.candidatos.screens.menu.MenuFragment
 import org.redciudadana.candidatos.screens.news.NewsFragment
+import org.redciudadana.candidatos.screens.politicalParty.PartyContract
+import org.redciudadana.candidatos.screens.politicalParty.PartyFragment
 
 class MainActivity : AppCompatActivity(), MainView, Events.Listener {
 
@@ -185,15 +188,32 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
         showProfiles(args)
     }
 
-    override fun showProfiles(electionType: ElectionType, district: String) {
+    override fun showProfiles(electionType: ElectionType, party: Party) {
+        val args = Bundle()
+        args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
+        args.putString(ProfilesContract.PARTY_BUNDLE_ARG, party.id)
+        showProfiles(args)
+    }
+
+    override fun showProfiles(electionType: ElectionType, district: String, party: Party) {
         val args = Bundle()
         args.putString(ProfilesContract.DISTRICT_BUNDLE_ARG, district)
         args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
+        args.putString(ProfilesContract.PARTY_BUNDLE_ARG, party.id)
         showProfiles(args)
     }
 
     override fun showProfiles(electionType: ElectionType, department: String, municipality: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showParties(electionType: ElectionType, district: String?, department: String?, municipality: String?) {
+        val args = Bundle()
+        args.putSerializable(PartyContract.BUNDLE_ARG_ELECTION_TYPE, electionType)
+        args.putString(PartyContract.BUNDLE_ARG_DISTRICT, district)
+        val fragment = PartyFragment()
+        fragment.arguments = args
+        changeFragment(fragment, true)
     }
 
     override fun showDepartments() {

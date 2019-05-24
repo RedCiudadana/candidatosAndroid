@@ -57,6 +57,7 @@ data class Profile(
     val email: String? = null,
     @Json(name = "nombrePartido (noEmber)") var nombrePartido: String? = null,
     var electionType: ElectionType? = null,
+    val casilla: String? = null,
     @Embedded(prefix = "info_") var profileInfo: ProfileInfo? = ProfileInfo()
 ) : Parcelable
 

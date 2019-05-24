@@ -9,6 +9,7 @@ object ProfilesContract {
 
     const val ELECTION_TYPE_BUNDLE_ARG = "electionType"
     const val DISTRICT_BUNDLE_ARG = "district"
+    const val PARTY_BUNDLE_ARG = "party"
 
     interface View: IView<MainView> {
         fun initCandidatesList(list: List<Profile>?)

@@ -1,24 +1,14 @@
 package org.redciudadana.candidatos.screens.districts
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.redciudadana.candidatos.utils.views.SimpleListItemViewHolder
 
 class DistrictsAdapter(
     private val representant: DistrictsContract.View,
     private val presenter: DistrictsContract.Presenter,
-    districts: List<String>?) : RecyclerView.Adapter<DistrictsAdapter.ViewHolder>() {
-
-
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val text: TextView?
-            get() = view.findViewById(android.R.id.text1)
-        fun setOnClickListener(listener: (View) -> Unit) {
-            view.setOnClickListener(listener)
-        }
-    }
+    districts: List<String>?) : RecyclerView.Adapter<SimpleListItemViewHolder>() {
 
     var districts: List<String>? = districts?.sorted()
         set(value) {
@@ -26,9 +16,9 @@ class DistrictsAdapter(
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleListItemViewHolder{
         val view = LayoutInflater.from(representant.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false)
-        return ViewHolder(view)
+        return SimpleListItemViewHolder(view)
     }
 
 
@@ -36,7 +26,7 @@ class DistrictsAdapter(
         return districts?.size ?: 0
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SimpleListItemViewHolder, position: Int) {
         val district = districts?.get(position)
         if (district != null) {
             holder.text?.text = district
