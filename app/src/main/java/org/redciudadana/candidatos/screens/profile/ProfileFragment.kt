@@ -34,12 +34,12 @@ import org.redciudadana.candidatos.utils.glide.RoundCornerTransformation
 import org.redciudadana.candidatos.utils.mvp.BaseFragment
 import java.lang.ref.WeakReference
 
-class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Presenter, MainView>(), DiputadoContract.View {
+class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presenter, MainView>(), ProfileContract.View {
 
-    override var mPresenter: DiputadoContract.Presenter = DiputadoPresenter()
+    override var mPresenter: ProfileContract.Presenter = DiputadoPresenter()
 
-    var mHistoryAdapter: WeakReference<DiputadoHistoryAdapter>? = null
-    var mVotingAdapter: WeakReference<DiputadoVotingAdapter>? = null
+    var mHistoryAdapter: WeakReference<ProfileHistoryAdapter>? = null
+    var mVotingAdapter: WeakReference<ProfileVotingAdapter>? = null
 
     override fun setTitle() {
         mActivityView?.setTitle("Candidato")
@@ -137,7 +137,7 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
         inflateIntoDetails(R.layout.fragment_diputado_history, "Historial político", R.drawable.icon_history_white)
         context?.let {
             val mLayoutManager = LinearLayoutManager(context)
-            val historyAdapter= DiputadoHistoryAdapter(this, historyEntryList)
+            val historyAdapter= ProfileHistoryAdapter(this, historyEntryList)
             mHistoryAdapter = WeakReference(historyAdapter)
             history_recycler.setHasFixedSize(true)
             history_recycler.layoutManager = mLayoutManager
@@ -200,7 +200,7 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
         inflateIntoDetails(R.layout.fragment_diputado_voting, "Votación", R.drawable.icon_check_white)
         context?.let {
             val mLayoutManager = LinearLayoutManager(context)
-            val votingAdapter= DiputadoVotingAdapter(this, voting)
+            val votingAdapter= ProfileVotingAdapter(this, voting)
             mVotingAdapter= WeakReference(votingAdapter)
             voting_recycler.setHasFixedSize(true)
             voting_recycler.layoutManager = mLayoutManager

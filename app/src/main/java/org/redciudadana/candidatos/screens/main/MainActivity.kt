@@ -19,7 +19,7 @@ import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Party
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.events.Events
-import org.redciudadana.candidatos.screens.profile.DiputadoFragment
+import org.redciudadana.candidatos.screens.profile.ProfileFragment
 import org.redciudadana.candidatos.screens.profiles.ProfilesContract
 import org.redciudadana.candidatos.screens.profiles.ProfilesFragment
 import org.redciudadana.candidatos.screens.districts.DistrictsFragment
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
     }
 
     override fun showProfile(profile: Profile) {
-        val fragment = DiputadoFragment()
+        val fragment = ProfileFragment()
         val arguments = Bundle()
         arguments.putParcelable(MainView.ARG_DIPUTADO, profile)
         fragment.arguments = arguments

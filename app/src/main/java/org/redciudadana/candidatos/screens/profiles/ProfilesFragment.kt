@@ -1,11 +1,11 @@
 package org.redciudadana.candidatos.screens.profiles
 
 import android.os.Bundle
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_diputados.*
 import org.redciudadana.candidatos.R
 import org.redciudadana.candidatos.data.models.Profile
@@ -23,7 +23,7 @@ class ProfilesFragment: BaseFragment<ProfilesContract.View, ProfilesContract.Pre
 
     override fun initCandidatesList(list: List<Profile>?) {
         val mLayoutManager = LinearLayoutManager(context)
-        mAdapter = ProfilesAdapter(context!!, this, list)
+        mAdapter = ProfilesAdapter(context!!, mPresenter, list)
         diputados_list.setHasFixedSize(true)
         diputados_list.layoutManager = mLayoutManager
         diputados_list.addItemDecoration(
@@ -45,10 +45,6 @@ class ProfilesFragment: BaseFragment<ProfilesContract.View, ProfilesContract.Pre
 
     override fun showCandidatesList(list: List<Profile>) {
         mAdapter.profiles = list
-    }
-
-    override fun onCandidateSelected(profile: Profile) {
-        mActivityView?.showProfile(profile)
     }
 
 }

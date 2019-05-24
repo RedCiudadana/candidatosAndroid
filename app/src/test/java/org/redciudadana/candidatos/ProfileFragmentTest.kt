@@ -6,7 +6,7 @@ import org.redciudadana.candidatos.data.models.HistoryEntry
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.screens.profile.DiputadoPresenter
 
-class DiputadoFragmentTest {
+class ProfileFragmentTest {
     @Test
     fun phoneRegexTest() {
         var phoneNumber: String? = "22323344"

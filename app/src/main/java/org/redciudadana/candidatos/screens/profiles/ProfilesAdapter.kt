@@ -31,7 +31,7 @@ class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
 class ProfilesAdapter(
     private val context: Context,
-    private val candidateView: ProfilesContract.View,
+    private val candidatePresenter: ProfilesContract.Presenter,
     diputados: List<Profile>?) : RecyclerView.Adapter<ViewHolder>() {
 
     var profiles: List<Profile>? = diputados
@@ -63,7 +63,7 @@ class ProfilesAdapter(
             holder.candidateText.text = profile.nombre
             holder.candidatePartido.text = profile.nombrePartido
             holder.onClickListener = View.OnClickListener {
-                candidateView.onCandidateSelected(profile)
+                candidatePresenter.onCandidateSelected(profile)
             }
         }
     }

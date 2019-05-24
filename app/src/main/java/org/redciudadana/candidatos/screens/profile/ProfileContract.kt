@@ -8,7 +8,7 @@ import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.IPresenter
 import org.redciudadana.candidatos.utils.mvp.IView
 
-object DiputadoContract {
+object ProfileContract {
     val options = arrayOf("Información general", "Historial político", "Asistencia", "Votación")
 
     interface View: IView<MainView> {

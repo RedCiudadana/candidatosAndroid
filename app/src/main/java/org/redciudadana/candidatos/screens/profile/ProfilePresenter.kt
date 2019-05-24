@@ -13,7 +13,7 @@ import org.redciudadana.candidatos.utils.openUrl
 
 val numberRegex = Regex("""(\d+)""")
 
-class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContract.Presenter {
+class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.Presenter {
     val profile: Profile
     get() = mView?.getArguments()?.getParcelable(MainView.ARG_DIPUTADO) as Profile
 

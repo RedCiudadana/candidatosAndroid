@@ -3,7 +3,6 @@ package org.redciudadana.candidatos.screens.profiles
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.redciudadana.candidatos.coroutines.bgDispatcher
-import org.redciudadana.candidatos.coroutines.bgScope
 import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.db.db
 import org.redciudadana.candidatos.data.models.ElectionType
@@ -29,6 +28,11 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
             }
             mView?.showCandidatesList(profilesPromise.await())
         }
+    }
+
+
+    override fun onCandidateSelected(profile: Profile) {
+        mView?.getActivityView()?.showProfile(profile)
     }
 
     fun presentDistrict(): List<Profile> {

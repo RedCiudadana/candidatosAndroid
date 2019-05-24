@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_diputado_option.view.*
 import org.redciudadana.candidatos.R
-import org.redciudadana.candidatos.screens.profile.DiputadoContract.options
+import org.redciudadana.candidatos.screens.profile.ProfileContract.options
 import org.redciudadana.candidatos.utils.glide.GlideApp
 
 class ViewHolder(val view: View) {
@@ -24,7 +24,7 @@ class ViewHolder(val view: View) {
     }
 }
 
-class DiputadoOptionsAdapter(val diputadoView: DiputadoContract.View): ArrayAdapter<String>(diputadoView.getContext()!!, 0, options) {
+class DiputadoOptionsAdapter(val diputadoView: ProfileContract.View): ArrayAdapter<String>(diputadoView.getContext()!!, 0, options) {
 
     val images = arrayListOf(
         R.drawable.icon_document_black,
@@ -37,7 +37,7 @@ class DiputadoOptionsAdapter(val diputadoView: DiputadoContract.View): ArrayAdap
     override fun getView(position: Int, viewParam: View?, parent: ViewGroup?): View {
         val view = viewParam ?: LayoutInflater.from(diputadoView.getContext()).inflate(R.layout.fragment_diputado_option, parent, false)
         val holder = ViewHolder(view)
-        holder.text.text = DiputadoContract.options[position]
+        holder.text.text = ProfileContract.options[position]
         GlideApp
             .with(diputadoView.getContext()!!)
             .load(images[position])
