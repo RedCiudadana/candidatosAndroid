@@ -8,7 +8,6 @@ import org.redciudadana.candidatos.utils.mvp.IView
 object ElectionTypesContract {
     interface View: IView<MainView> {
         fun initDistrictList()
-        fun showElectionType(electionType: ElectionType)
     }
 
     interface Presenter: IPresenter<View> {

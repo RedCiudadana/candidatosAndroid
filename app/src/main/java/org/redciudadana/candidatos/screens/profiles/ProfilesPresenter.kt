@@ -1,6 +1,8 @@
 package org.redciudadana.candidatos.screens.profiles
 
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.redciudadana.candidatos.coroutines.bgDispatcher
 import org.redciudadana.candidatos.coroutines.bgScope
 import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.db.db
@@ -9,35 +11,53 @@ import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.utils.mvp.BasePresenter
 
 class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContract.Presenter {
+    lateinit var electionType: ElectionType
     override fun onViewCreated() {
-        mView?.initCandidatesList(null)
-        val electionType = mView?.getArguments()?.get(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG) as ElectionType
-        when (electionType) {
-            ElectionType.DISTRICT -> presentDistrict()
-            ElectionType.PRESIDENT, ElectionType.VICEPRESIDENT -> {
-                presentElectionType(electionType)
+        electionType  = mView?.getArguments()?.get(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG) as ElectionType
+        uiScope.launch {
+            mView?.initCandidatesList(null)
+
+            val profilesPromise = async(bgDispatcher) {
+                when (electionType) {
+                    ElectionType.DISTRICT -> presentDistrict()
+                    ElectionType.PRESIDENT, ElectionType.VICEPRESIDENT -> {
+                        presentElectionType(electionType)
+                    }
+                    ElectionType.NATIONAL_LISTING, ElectionType.PARLACEN -> presentParty()
+                    else -> emptyList()
+                }
             }
-            else -> return
+            mView?.showCandidatesList(profilesPromise.await())
         }
     }
 
-    fun presentDistrict() = bgScope.launch {
+    fun presentDistrict(): List<Profile> {
         val district = mView?.getArguments()?.getString(ProfilesContract.DISTRICT_BUNDLE_ARG)
-        require(district != null)
+        val party = mView?.getArguments()?.getString(ProfilesContract.PARTY_BUNDLE_ARG)
+        requireNotNull(district)
+        requireNotNull(party)
         setTitle(district)
-        val profiles = db.profileDao().getProfilesFor(ElectionType.DISTRICT, district)
-        presentProfiles(profiles)
+        return db.profileDao().getProfilesFor(ElectionType.DISTRICT, district, party)
     }
 
-    fun presentElectionType(electionType: ElectionType) = bgScope.launch {
+    fun presentParty(): List<Profile> {
+        val party = mView?.getArguments()?.getString(ProfilesContract.PARTY_BUNDLE_ARG)
+        requireNotNull(party)
         setTitle(electionType)
-        val profiles = db.profileDao().getProfilesFor(electionType)
+        return db.profileDao().getProfilesFor(electionType, party)
             .map {
                 it.profile.nombrePartido = it.partyName
                 it.profile
             }
+    }
 
-        presentProfiles(profiles)
+    fun presentElectionType(electionType: ElectionType): List<Profile> {
+        setTitle(electionType)
+        return db.profileDao().getProfilesFor(electionType)
+            .map {
+                it.profile.nombrePartido = it.partyName
+                it.profile
+            }
     }
 
     fun setTitle(electionType: ElectionType) = uiScope.launch {
@@ -54,10 +74,6 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
 
     fun setTitle(title: String) = uiScope.launch {
         mView?.setTitle(title)
-    }
-
-    fun presentProfiles(profileList: List<Profile>) = uiScope.launch {
-        mView?.showCandidatesList(profileList)
     }
 
 }

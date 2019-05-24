@@ -2,18 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/drawer_profiles"
-        android:title="Diputados"
-        android:icon="@drawable/drawer_diputado"/>
-
-    <item
         android:id="@+id/drawer_representant"
         android:title="@string/menu_representante"
         android:icon="@drawable/drawer_location"/>
-    <item
-        android:id="@+id/drawer_congress_data"
-        android:title="Congreso en datos"
-        android:icon="@drawable/drawer_pie"/>
     <item
         android:id="@+id/drawer_news"
         android:title="Últimas noticias"

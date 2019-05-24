@@ -31,10 +31,6 @@ class ElectionTypesFragment: BaseFragment<ElectionTypesContract.View, ElectionTy
 
     }
 
-    override fun showElectionType(electionType: ElectionType) {
-        mActivityView?.showElectionType(electionType)
-    }
-
     override fun setTitle() {
         mActivityView?.setTitle("Mis candidatos")
     }

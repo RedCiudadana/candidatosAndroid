@@ -40,6 +40,8 @@ data class Profile(
     val partidopostulante: String? = null,
     val partidoactual: String? = null,
     val distrito: String? = null,
+    val departamento: String? = null,
+    val municipio: String? = null,
     val nacimiento: String? = null,
     val estado: String? = null,
     val historialpolitico: String? = null,

@@ -7,7 +7,7 @@ enum class ElectionType(val label: String) {
     VICEPRESIDENT("Vicepresidencial"),
     NATIONAL_LISTING("Listado nacional"),
     DISTRICT("Distrital"),
-    MAYOR("Mayor"),
+    MAYOR("Alcaldía"),
     PARLACEN("Parlacen");
 
     val keyName: String

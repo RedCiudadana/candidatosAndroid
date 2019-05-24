@@ -20,8 +20,8 @@ class PartyPresenter: BasePresenter<PartyContract.View>(), PartyContract.Present
 
             val parties = async(bgDispatcher) {
                 val result = when (electionType) {
-                    ElectionType.NATIONAL_LISTING -> {
-                        db.profileDao().getParties(ElectionType.NATIONAL_LISTING)
+                    ElectionType.NATIONAL_LISTING, ElectionType.PARLACEN -> {
+                        db.profileDao().getParties(electionType)
                     }
                     ElectionType.DISTRICT -> {
                         val district = mView?.getArguments()?.get(PartyContract.BUNDLE_ARG_DISTRICT) as? String
@@ -29,6 +29,7 @@ class PartyPresenter: BasePresenter<PartyContract.View>(), PartyContract.Present
                         this@PartyPresenter.district = district
                         db.profileDao().getDistrictParties(electionType, district)
                     }
+
                     else -> emptyList()
                 }
                 return@async result
@@ -42,10 +43,10 @@ class PartyPresenter: BasePresenter<PartyContract.View>(), PartyContract.Present
             ElectionType.DISTRICT -> {
                 val district = this.district
                 requireNotNull(district)
-                mView?.getActivityView()?.showProfiles(electionType, district, party.id)
+                mView?.getActivityView()?.showProfiles(electionType, district = district, party = party)
             }
-            ElectionType.NATIONAL_LISTING -> {
-                mView?.getActivityView()?.showProfiles(electionType, party)
+            ElectionType.NATIONAL_LISTING, ElectionType.PARLACEN -> {
+                mView?.getActivityView()?.showProfiles(electionType, party = party)
             }
             else -> return
         }

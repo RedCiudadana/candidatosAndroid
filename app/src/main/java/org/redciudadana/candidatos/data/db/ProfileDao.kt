@@ -20,8 +20,8 @@ interface ProfileDao {
     fun getProfilesFor(electionType: ElectionType): List<ProfileParty>
 
     @TypeConverters(ElectionTypeConverter::class)
-    @Query("select * from profile where electionType = :electionType and partido = :party order by cast(casilla as unsigned), nombre")
-    fun getProfilesFor(electionType: ElectionType, party: String): List<Profile>
+    @Query("select profile.*, coalesce(party.nombreCorto, profile.nombrePartido) as partyName from profile left join party on (party.id = profile.partido) where electionType = :electionType and partido = :party order by cast(casilla as unsigned), nombre")
+    fun getProfilesFor(electionType: ElectionType, party: String): List<ProfileParty>
 
     @TypeConverters(ElectionTypeConverter::class)
     @Query("select * from profile where electionType = :electionType and distrito = :district and partido = :party")
@@ -49,4 +49,10 @@ interface ProfileDao {
     @Query("""select distinct party.* from party join profile on (party.id = profile.partido)
             where profile.electionType = :electionType and profile.distrito = :district order by party.nombreCompleto""")
     fun getDistrictParties(electionType: ElectionType, district: String): List<Party>
+
+    @Query("""
+        select distinct departamento from profile where departamento is not null and electionType = 'MAYOR'
+        order by departamento
+    """)
+    fun getMayorDepartments(): List<String>
 }

@@ -68,9 +68,7 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
     private fun setDrawerNavigationListener() {
         drawer_navigation.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.drawer_profiles-> showProfiles()
                 R.id.drawer_representant -> showElectionTypes()
-                R.id.drawer_congress_data -> showCongressData()
                 R.id.drawer_news -> showNews()
                 else -> {
                     return@setNavigationItemSelectedListener false
@@ -160,17 +158,6 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
         changeFragment(fragment, true)
     }
 
-    override fun showElectionType(electionType: ElectionType) {
-        if (electionType === ElectionType.DISTRICT) {
-            showDistricts()
-        }
-        else if (ElectionType.MAYOR === electionType) {
-            showDepartments()
-        } else {
-            showProfiles(electionType)
-        }
-    }
-
     override fun showDistricts() {
         val fragment = DistrictsFragment()
         changeFragment(fragment, true)
@@ -182,29 +169,12 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
         changeFragment(fragment, true)
     }
 
-    override fun showProfiles(electionType: ElectionType) {
-        val args = Bundle()
-        args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
-        showProfiles(args)
-    }
-
-    override fun showProfiles(electionType: ElectionType, party: Party) {
-        val args = Bundle()
-        args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
-        args.putString(ProfilesContract.PARTY_BUNDLE_ARG, party.id)
-        showProfiles(args)
-    }
-
-    override fun showProfiles(electionType: ElectionType, district: String, party: Party) {
+    override fun showProfiles(electionType: ElectionType, district: String?, department: String?, municipality: String?, party: Party?) {
         val args = Bundle()
         args.putString(ProfilesContract.DISTRICT_BUNDLE_ARG, district)
         args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
-        args.putString(ProfilesContract.PARTY_BUNDLE_ARG, party.id)
+        args.putString(ProfilesContract.PARTY_BUNDLE_ARG, party?.id)
         showProfiles(args)
-    }
-
-    override fun showProfiles(electionType: ElectionType, department: String, municipality: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showParties(electionType: ElectionType, district: String?, department: String?, municipality: String?) {

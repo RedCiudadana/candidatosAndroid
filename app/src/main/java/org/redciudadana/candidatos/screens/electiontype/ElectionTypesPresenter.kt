@@ -13,7 +13,7 @@ class ElectionTypesPresenter: BasePresenter<ElectionTypesContract.View>(), Elect
             ElectionType.PRESIDENT, ElectionType.VICEPRESIDENT-> {
                 mView?.getActivityView()?.showProfiles(electionType)
             }
-            ElectionType.NATIONAL_LISTING -> {
+            ElectionType.NATIONAL_LISTING, ElectionType.PARLACEN -> {
                 mView?.getActivityView()?.showParties(electionType)
             }
             ElectionType.DISTRICT -> mView?.getActivityView()?.showDistricts()
