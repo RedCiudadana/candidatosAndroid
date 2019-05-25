@@ -14,8 +14,6 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
     override fun onViewCreated() {
         electionType  = mView?.getArguments()?.get(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG) as ElectionType
         uiScope.launch {
-            mView?.initCandidatesList(null)
-
             val profilesPromise = async(bgDispatcher) {
                 when (electionType) {
                     ElectionType.DISTRICT -> presentDistrict()
@@ -23,7 +21,7 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
                         presentElectionType(electionType)
                     }
                     ElectionType.NATIONAL_LISTING, ElectionType.PARLACEN -> presentParty()
-                    else -> emptyList()
+                    ElectionType.MAYOR -> presentMayors()
                 }
             }
             mView?.showCandidatesList(profilesPromise.await())
@@ -48,20 +46,22 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
         val party = mView?.getArguments()?.getString(ProfilesContract.PARTY_BUNDLE_ARG)
         requireNotNull(party)
         setTitle(electionType)
-        return db.profileDao().getProfilesFor(electionType, party)
-            .map {
-                it.profile.nombrePartido = it.partyName
-                it.profile
-            }
+        return db.profileDao().getProfilesFor(electionType, party).map { it.computedProfile() }
+    }
+
+    fun presentMayors(): List<Profile> {
+        val department = mView?.getArguments()?.getString(ProfilesContract.DEPARTMENT_BUNDLE_ARG)
+        val municipality = mView?.getArguments()?.getString(ProfilesContract.MUNICIPALITY_BUNDLE_ARG)
+        requireNotNull(department)
+        requireNotNull(municipality)
+        setTitle("Candidatos $municipality")
+        return db.profileDao().getMayorProfiles(department, municipality).map { it.computedProfile() }
     }
 
     fun presentElectionType(electionType: ElectionType): List<Profile> {
         setTitle(electionType)
         return db.profileDao().getProfilesFor(electionType)
-            .map {
-                it.profile.nombrePartido = it.partyName
-                it.profile
-            }
+            .map { it.computedProfile() }
     }
 
     fun setTitle(electionType: ElectionType) = uiScope.launch {

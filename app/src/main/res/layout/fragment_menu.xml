@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/menu_item_mi_representante"
         style="@style/Menu.Element"
-        android:background="@drawable/rounded_shape_light_blue">
+        android:background="@drawable/rounded_shape_green">
         <ImageView
             style="@style/Menu.Image"
             android:src="@drawable/round_mapa" />
@@ -22,7 +22,7 @@
     <LinearLayout
         android:id="@+id/menu_item_congreso_datos"
         style="@style/Menu.Element"
-        android:background="@drawable/rounded_shape_green">
+        android:background="@drawable/rounded_shape_light_blue">
         <ImageView
             style="@style/Menu.Image"
             android:src="@drawable/round_lupa" />

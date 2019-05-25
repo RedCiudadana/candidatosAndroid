@@ -17,6 +17,7 @@ class ElectionTypesPresenter: BasePresenter<ElectionTypesContract.View>(), Elect
                 mView?.getActivityView()?.showParties(electionType)
             }
             ElectionType.DISTRICT -> mView?.getActivityView()?.showDistricts()
+            ElectionType.MAYOR -> mView?.getActivityView()?.showMayorDepartments()
             else -> return
         }
     }

@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Monitor Legislativo</string>
+    <string name="app_name">CandiDatos</string>
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Cerrar</string>
-    <string name="title_menu">Monitor legislativo</string>
+    <string name="title_menu">CandiDatos</string>
     <string name="title_diputados">Diputados</string>
 
     <string name="error_profiles">No se pudieron obtener los datos, intenta más tarde</string>

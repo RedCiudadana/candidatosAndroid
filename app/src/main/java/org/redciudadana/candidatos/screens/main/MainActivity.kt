@@ -19,15 +19,18 @@ import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Party
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.events.Events
-import org.redciudadana.candidatos.screens.profile.ProfileFragment
-import org.redciudadana.candidatos.screens.profiles.ProfilesContract
-import org.redciudadana.candidatos.screens.profiles.ProfilesFragment
 import org.redciudadana.candidatos.screens.districts.DistrictsFragment
 import org.redciudadana.candidatos.screens.electiontype.ElectionTypesFragment
+import org.redciudadana.candidatos.screens.mayor.departments.DepartmentsFragment
+import org.redciudadana.candidatos.screens.mayor.municipalities.MunicipalityContract
+import org.redciudadana.candidatos.screens.mayor.municipalities.MunicipalityFragment
 import org.redciudadana.candidatos.screens.menu.MenuFragment
 import org.redciudadana.candidatos.screens.news.NewsFragment
 import org.redciudadana.candidatos.screens.politicalParty.PartyContract
 import org.redciudadana.candidatos.screens.politicalParty.PartyFragment
+import org.redciudadana.candidatos.screens.profile.ProfileFragment
+import org.redciudadana.candidatos.screens.profiles.ProfilesContract
+import org.redciudadana.candidatos.screens.profiles.ProfilesFragment
 
 class MainActivity : AppCompatActivity(), MainView, Events.Listener {
 
@@ -174,6 +177,8 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
         args.putString(ProfilesContract.DISTRICT_BUNDLE_ARG, district)
         args.putSerializable(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG, electionType)
         args.putString(ProfilesContract.PARTY_BUNDLE_ARG, party?.id)
+        args.putString(ProfilesContract.DEPARTMENT_BUNDLE_ARG, department)
+        args.putString(ProfilesContract.MUNICIPALITY_BUNDLE_ARG, municipality)
         showProfiles(args)
     }
 
@@ -186,12 +191,17 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
         changeFragment(fragment, true)
     }
 
-    override fun showDepartments() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showMayorDepartments() {
+        val fragment = DepartmentsFragment()
+        changeFragment(fragment, true)
     }
 
-    override fun showMunicipalities() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showMunicipalities(department: String) {
+        val fragment = MunicipalityFragment()
+        val args = Bundle()
+        args.putString(MunicipalityContract.DEPARTMENT_BUNDLE_ARG, department)
+        fragment.arguments = args
+        changeFragment(fragment, true)
     }
 
     override fun showNews() {
@@ -222,5 +232,10 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
         if (onBackListener?.invoke() != true) {
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Events.unregisterListener(this)
     }
 }

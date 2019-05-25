@@ -1,4 +1,4 @@
-package org.redciudadana.candidatos.screens.politicalParty
+package org.redciudadana.candidatos.screens.mayor.municipalities
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,16 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_recycler.*
 import org.redciudadana.candidatos.R
-import org.redciudadana.candidatos.data.models.Party
 import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.BaseFragment
 import org.redciudadana.candidatos.utils.views.initializeRecycler
 import java.lang.ref.WeakReference
 
-class PartyFragment: BaseFragment<PartyContract.View, PartyContract.Presenter, MainView>(), PartyContract.View {
+class MunicipalityFragment: BaseFragment<MunicipalityContract.View, MunicipalityContract.Presenter, MainView>(), MunicipalityContract.View {
 
-    override var mPresenter: PartyContract.Presenter = PartyPresenter()
-    var mPartyAdapter: WeakReference<PartyAdapter>? = null
+    override var mPresenter: MunicipalityContract.Presenter = MunicipalityPresenter()
+    var mAdapter: WeakReference<MunicipalityAdapter>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recycler, container, false)
@@ -24,24 +23,24 @@ class PartyFragment: BaseFragment<PartyContract.View, PartyContract.Presenter, M
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecycler(context, recycler_view)
-
     }
 
-    override fun setTitle() {
-        mActivityView?.setTitle("Partidos")
-    }
-
-    override fun presentPartyList(partyList: List<Party>) {
-        var partyAdapter = mPartyAdapter?.get()
-        if (partyAdapter == null) {
-            partyAdapter = PartyAdapter(context!!, mPresenter, partyList)
-            mPartyAdapter = WeakReference(partyAdapter)
+    override fun showMunicipalities(municipalityList: List<String>) {
+        var adapter = mAdapter?.get()
+        if (adapter == null) {
+            adapter = MunicipalityAdapter(context!!, mPresenter, municipalityList)
+            mAdapter = WeakReference(adapter)
+            recycler_view.adapter = adapter
         }
-        recycler_view.adapter = partyAdapter
+        adapter.municipalityList = municipalityList
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mPartyAdapter = null
+        mAdapter = null
+    }
+
+    override fun setTitle() {
+        mActivityView?.setTitle("Selecciona tu muni")
     }
 }

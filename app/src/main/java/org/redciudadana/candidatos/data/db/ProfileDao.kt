@@ -13,7 +13,12 @@ interface ProfileDao {
         @Embedded
         val profile: Profile,
         val partyName: String
-    )
+    ) {
+        fun computedProfile(): Profile {
+            profile.nombrePartido = partyName
+            return profile
+        }
+    }
 
     @TypeConverters(ElectionTypeConverter::class)
     @Query("select profile.*, coalesce(party.nombreCorto, profile.nombrePartido) as partyName from profile left join party on (party.id = profile.partido) where electionType = :electionType")
@@ -26,6 +31,15 @@ interface ProfileDao {
     @TypeConverters(ElectionTypeConverter::class)
     @Query("select * from profile where electionType = :electionType and distrito = :district and partido = :party")
     fun getProfilesFor(electionType: ElectionType, district: String, party: String): List<Profile>
+
+    @Query("""
+        select profile.*, coalesce(party.nombreCorto, profile.nombrePartido) as partyName
+        from profile
+        left join party on (profile.partido = party.id)
+        where electionType = 'MAYOR' and departamento = :department and municipio = :municipality
+        order by nombre
+    """)
+    fun getMayorProfiles(department: String, municipality: String): List<ProfileParty>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProfiles(profiles: List<Profile>)
@@ -51,8 +65,18 @@ interface ProfileDao {
     fun getDistrictParties(electionType: ElectionType, district: String): List<Party>
 
     @Query("""
-        select distinct departamento from profile where departamento is not null and electionType = 'MAYOR'
+        select distinct departamento
+        from profile
+        where departamento is not null and departamento != '' and electionType = 'MAYOR'
         order by departamento
     """)
     fun getMayorDepartments(): List<String>
+
+    @Query("""
+        select distinct municipio
+        from profile
+        where municipio is not null and municipio != '' and electionType = 'MAYOR' and departamento = :department
+        order by municipio
+    """)
+    fun getMayorMunicipalities(department: String): List<String>
 }

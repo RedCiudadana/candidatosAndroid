@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:padding="15dp"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorPrimary"
     android:layout_height="192dp">
     <ImageView
         android:src="@drawable/logo"
