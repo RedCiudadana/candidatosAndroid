@@ -118,13 +118,17 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
 
     private fun showSquareDetail(profile: Profile) {
         val text = when (profile.electionType) {
-            ElectionType.PRESIDENT -> "Presidente"
-            ElectionType.VICEPRESIDENT -> "Vicepresidente"
-            ElectionType.NATIONAL_LISTING -> if (profile.casilla != null) "Casilla ${profile.casilla}" else "Listado nacional"
-            ElectionType.PARLACEN -> "Parlacen"
+            ElectionType.NATIONAL_LISTING, ElectionType.PARLACEN -> {
+                if (profile.casilla != null) {
+                    "Casilla ${profile.casilla}"
+                }
+                 else {
+                    profile.electionType?.label
+                }
+            }
             ElectionType.DISTRICT -> profile.distrito
             ElectionType.MAYOR -> profile.municipio
-            null -> ""
+            else -> ""
         }
         diputado_department.text = text
     }
@@ -135,6 +139,10 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
                 .with(it)
                 .load(party.logoUrl)
                 .into(diputado_partido_image)
+        }
+        val text = diputado_department.text
+        if (text == null || text.isBlank()) {
+            diputado_department.text = party.nombreCompleto
         }
     }
 
@@ -255,7 +263,7 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
 
 
     private fun fromHtml(text: String?): CharSequence? {
-        if (text == null) return "Información no disponible"
+        if (text == null || text.isBlank()) return "Información no disponible"
         return if (Build.VERSION.SDK_INT < 24) {
             Html.fromHtml(text)
         } else {
