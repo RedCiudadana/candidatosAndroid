@@ -105,13 +105,28 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
                 .with(it)
                 .load(profile.fotoUrl)
                 .transform(RoundCornerTransformation(it.resources))
+                .fallback(R.drawable.profile)
+                .error(R.drawable.profile)
                 .into(diputado_face_image)
         }
         diputado_name.text = profile.nombre
-        diputado_department.text = profile.distrito
+        showSquareDetail(profile)
         button_facebook.setOnClickListener { mPresenter.onFacebookPress() }
         button_twitter.setOnClickListener { mPresenter.onTwitterPress() }
         button_call.setOnClickListener { mPresenter.onPhonePress() }
+    }
+
+    private fun showSquareDetail(profile: Profile) {
+        val text = when (profile.electionType) {
+            ElectionType.PRESIDENT -> "Presidente"
+            ElectionType.VICEPRESIDENT -> "Vicepresidente"
+            ElectionType.NATIONAL_LISTING -> if (profile.casilla != null) "Casilla ${profile.casilla}" else "Listado nacional"
+            ElectionType.PARLACEN -> "Parlacen"
+            ElectionType.DISTRICT -> profile.distrito
+            ElectionType.MAYOR -> profile.municipio
+            null -> ""
+        }
+        diputado_department.text = text
     }
 
     override fun showParty(party: Party) {
@@ -130,7 +145,7 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
 
     override fun showGeneralInformation(view: View, profile: Profile) {
         inflateIntoDetails(R.layout.fragment_diputado_general_info, "Información general", R.drawable.icon_document_white)
-        val parsedText = fromHtml(profile.informaciongeneral)
+        val parsedText = fromHtml(profile.profileInfo?.biography)
         diputado_general_info_text.text = parsedText
         unfoldDetails(view)
     }
