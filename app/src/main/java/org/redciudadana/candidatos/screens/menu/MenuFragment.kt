@@ -27,7 +27,7 @@ class MenuFragment: Fragment() {
         }
 
         menu_item_congreso_datos.setOnClickListener {
-            mainView.showCongressData()
+            mainView.showElectionProcess()
         }
 
         menu_item_noticias.setOnClickListener {

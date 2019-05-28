@@ -6,7 +6,12 @@ import org.redciudadana.candidatos.utils.mvp.IPresenter
 import org.redciudadana.candidatos.utils.mvp.IView
 
 object ProfileContract {
-    val options = arrayOf("Información general", "Historial político", "Asistencia", "Votación")
+    val options = arrayOf(
+        "Información general",
+        "Historial político"
+//        "Asistencia",
+//        "Votación"
+    )
 
     interface View: IView<MainView> {
         fun showProfile(profile: Profile)
@@ -15,10 +20,8 @@ object ProfileContract {
         fun showGeneralInformation(view: android.view.View, profile: Profile)
         fun showHistory(view: android.view.View, historyEntryList: List<HistoryEntry>?)
         fun updateHistory(historyEntryList: List<HistoryEntry>?)
-        fun showAssistance(view: android.view.View, assistance: Assistance?)
-        fun updateAssistance(assistance: Assistance?)
-        fun showVoting(view: android.view.View, voting: List<Voting>?)
-        fun updateVoting(voting: List<Voting>?)
+        fun showInterview(view: android.view.View)
+        fun updateInterview(interviewList: List<Interview>)
     }
 
     interface Presenter: IPresenter<View> {

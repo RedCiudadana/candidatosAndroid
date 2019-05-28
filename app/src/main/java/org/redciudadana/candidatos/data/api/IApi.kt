@@ -57,4 +57,7 @@ interface IApi {
     @GET("partido.json")
     fun getPartyList(): Call<List<Party>>
 
+    @GET("entrevistas.json")
+    fun getInterviews(): Call<List<Interview>>
+
 }

@@ -11,6 +11,6 @@ class Application: MultiDexApplication() {
         super.onCreate()
         initializeDatabase(applicationContext)
         Twitter.initialize(this)
-        fetchAll(this)
+        fetchAll()
     }
 }

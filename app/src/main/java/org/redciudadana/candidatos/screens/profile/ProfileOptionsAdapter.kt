@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_diputado_option.view.*
 import org.redciudadana.candidatos.R
-import org.redciudadana.candidatos.screens.profile.ProfileContract.options
 import org.redciudadana.candidatos.utils.glide.GlideApp
 
 class ViewHolder(val view: View) {
@@ -24,13 +23,14 @@ class ViewHolder(val view: View) {
     }
 }
 
-class DiputadoOptionsAdapter(val diputadoView: ProfileContract.View): ArrayAdapter<String>(diputadoView.getContext()!!, 0, options) {
+class DiputadoOptionsAdapter(val diputadoView: ProfileContract.View):
+    ArrayAdapter<String>(diputadoView.getContext()!!, 0, ProfileContract.options) {
 
     val images = arrayListOf(
         R.drawable.icon_document_black,
-        R.drawable.icon_history_black,
-        R.drawable.icon_people_black,
-        R.drawable.icon_check_black
+        R.drawable.icon_history_black
+//        R.drawable.icon_people_black,
+//        R.drawable.icon_check_black
     )
 
 

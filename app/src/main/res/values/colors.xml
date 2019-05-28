@@ -7,6 +7,8 @@
     <color name="drawer_menu_background">#163674</color>
     <color name="drawer_menu_text">#FFFFFF</color>
 
+    <color name="main_menu_green">#00ac56</color>
+
     <!-- profiles -->
     <color name="diputados_background">#eee</color>
     <color name="diputados_text_color">#000</color>
@@ -18,4 +20,6 @@
     <color name="chart_assistance">#00ac56</color>
     <color name="chart_missing">#f6ab40</color>
     <color name="chart_label">#333</color>
+
+
 </resources>

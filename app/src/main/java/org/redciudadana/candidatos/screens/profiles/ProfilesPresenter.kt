@@ -7,12 +7,23 @@ import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.db.db
 import org.redciudadana.candidatos.data.models.ElectionType
 import org.redciudadana.candidatos.data.models.Profile
+import org.redciudadana.candidatos.events.Events
 import org.redciudadana.candidatos.utils.mvp.BasePresenter
 
-class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContract.Presenter {
+class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContract.Presenter, Events.Listener {
     lateinit var electionType: ElectionType
     override fun onViewCreated() {
+        Events.registerListener(Events.EventType.PROFILES_UPDATED, this)
         electionType  = mView?.getArguments()?.get(ProfilesContract.ELECTION_TYPE_BUNDLE_ARG) as ElectionType
+        presentCandidates()
+    }
+
+    override fun detachView() {
+        super.detachView()
+        Events.unregisterListener(this)
+    }
+
+    fun presentCandidates() {
         uiScope.launch {
             val profilesPromise = async(bgDispatcher) {
                 when (electionType) {
@@ -27,7 +38,6 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
             mView?.showCandidatesList(profilesPromise.await())
         }
     }
-
 
     override fun onCandidateSelected(profile: Profile) {
         mView?.getActivityView()?.showProfile(profile)
@@ -78,6 +88,10 @@ class ProfilesPresenter: BasePresenter<ProfilesContract.View>(), ProfilesContrac
 
     fun setTitle(title: String) = uiScope.launch {
         mView?.setTitle(title)
+    }
+
+    override fun onEvent(eventType: Events.EventType) {
+        presentCandidates()
     }
 
 }

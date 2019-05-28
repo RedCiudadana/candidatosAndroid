@@ -28,7 +28,7 @@
             android:src="@drawable/round_lupa" />
         <TextView
             style="@style/Menu.Text"
-            android:text="@string/menu_congreso_datos"
+            android:text="@string/menu_election_process"
             />
     </LinearLayout>
     <LinearLayout

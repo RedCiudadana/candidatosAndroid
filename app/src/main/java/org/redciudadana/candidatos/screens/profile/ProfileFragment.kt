@@ -36,7 +36,6 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
     override var mPresenter: ProfileContract.Presenter = DiputadoPresenter()
 
     var mHistoryAdapter: WeakReference<ProfileHistoryAdapter>? = null
-    var mVotingAdapter: WeakReference<ProfileVotingAdapter>? = null
 
     override fun setTitle() {
         mActivityView?.setTitle("Candidato")
@@ -187,61 +186,12 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
         }
     }
 
-    fun createData(percentageString: String?): PieData {
-        val percentage = percentageString?.replace("%", "")?.toFloatOrNull() ?: 0f
-        val missing = 100f - percentage
-        val entries = listOf(
-            PieEntry(percentage, "Asistencia"),
-            PieEntry(missing, "Ausencia")
-        )
-        val dataSet = PieDataSet(entries, "")
-        dataSet.setColors(intArrayOf(R.color.chart_assistance, R.color.chart_missing), context)
-        dataSet.setValueFormatter { value, _, _, _-> "$value%" }
-        return PieData(dataSet)
+    override fun showInterview(view: View) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showAssistance(view: View, assistance: Assistance?) {
-        inflateIntoDetails(R.layout.fragment_diputado_assistance, "Asistencia", R.drawable.icon_people_white)
-        val data = createData(assistance?.porcentaje)
-        val description = Description()
-        description.text = ""
-        diputado_assistance_chart.description= description
-        diputado_assistance_chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.chart_label))
-        diputado_assistance_chart.data = data
-        diputado_assistance_chart.invalidate()
-        unfoldDetails(view)
-    }
-
-    override fun updateAssistance(assistance: Assistance?) {
-        view?.findViewById<PieChart>(R.id.diputado_assistance_chart)?.let {
-            val data = createData(assistance?.porcentaje)
-            it.data = data
-            it.invalidate()
-        }
-
-    }
-
-    override fun showVoting(view: View, voting: List<Voting>?) {
-        inflateIntoDetails(R.layout.fragment_diputado_voting, "Votación", R.drawable.icon_check_white)
-        context?.let {
-            val mLayoutManager = LinearLayoutManager(context)
-            val votingAdapter= ProfileVotingAdapter(this, voting)
-            mVotingAdapter= WeakReference(votingAdapter)
-            voting_recycler.setHasFixedSize(true)
-            voting_recycler.layoutManager = mLayoutManager
-            voting_recycler.addItemDecoration(
-                DividerItemDecoration(
-                    context,
-                    mLayoutManager.orientation
-                )
-            )
-            voting_recycler.adapter = votingAdapter
-        }
-        unfoldDetails(view)
-    }
-
-    override fun updateVoting(voting: List<Voting>?) {
-        mVotingAdapter?.get()?.votingList = voting
+    override fun updateInterview(interviewList: List<Interview>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun inflateIntoDetails(layout: Int, title: String, icon: Int) {

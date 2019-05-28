@@ -20,6 +20,7 @@ import org.redciudadana.candidatos.data.models.Party
 import org.redciudadana.candidatos.data.models.Profile
 import org.redciudadana.candidatos.events.Events
 import org.redciudadana.candidatos.screens.districts.DistrictsFragment
+import org.redciudadana.candidatos.screens.election_process.ElectionProcessFragment
 import org.redciudadana.candidatos.screens.electiontype.ElectionTypesFragment
 import org.redciudadana.candidatos.screens.mayor.departments.DepartmentsFragment
 import org.redciudadana.candidatos.screens.mayor.municipalities.MunicipalityContract
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
             when (it.itemId) {
                 R.id.drawer_representant -> showElectionTypes()
                 R.id.drawer_news -> showNews()
+                R.id.drawer_election_process -> showElectionProcess()
                 else -> {
                     return@setNavigationItemSelectedListener false
                 }
@@ -206,6 +208,11 @@ class MainActivity : AppCompatActivity(), MainView, Events.Listener {
 
     override fun showNews() {
         val fragment = NewsFragment()
+        changeFragment(fragment, true)
+    }
+
+    override fun showElectionProcess() {
+        val fragment = ElectionProcessFragment()
         changeFragment(fragment, true)
     }
 

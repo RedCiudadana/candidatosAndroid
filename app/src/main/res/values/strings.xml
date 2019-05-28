@@ -4,13 +4,14 @@
     <string name="drawer_close">Cerrar</string>
     <string name="title_menu">CandiDatos</string>
     <string name="title_diputados">Diputados</string>
+    <string name="title_election_process">Elección 2019</string>
 
     <string name="error_profiles">No se pudieron obtener los datos, intenta más tarde</string>
     
     <!-- menu -->
     <string name="menu_diputados">Diputados</string>
     <string name="menu_representante">¿Quiénes son mis candidatos?</string>
-    <string name="menu_congreso_datos">Congreso en datos</string>
+    <string name="menu_election_process">Elección 2019</string>
     <string name="menu_noticias">Últimas noticias</string>
 
     <!-- lista profiles -->
@@ -19,6 +20,10 @@
     <!-- diputado -->
     <string name="diputado_history_year">Año</string>
     <string name="diputado_history_entity">Entidad</string>
+
+    <!-- election type -->
+    <string name="election_type_header">¿Quiénes son mis candidatos?</string>
+    <string name="election_type_subheader">Elige el tipo de elección</string>
 
 </resources>
 

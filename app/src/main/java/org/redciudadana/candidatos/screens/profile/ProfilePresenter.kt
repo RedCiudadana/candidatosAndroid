@@ -57,8 +57,6 @@ class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.
         when (position) {
             0 -> mView?.showGeneralInformation(view, profile)
             1 -> prepareHistoryAndShow(view)
-            2 -> prepareAssistance(view)
-            3 -> prepareVoting(view)
         }
     }
 
@@ -96,52 +94,15 @@ class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.
     }
 
     fun prepareHistoryAndShow(view: View) {
-        mView?.showLoading()
-        mView?.getContext()?.let {
-            val cachedHistory = ModelStorage.getHistoryEntryList(it)
-            mView?.showHistory(view, filterHistory(cachedHistory, profile))
-//            Api.getHistoryEntryList(it) { response, error ->
-//                mView?.hideLoading()
-//                if (error != null) {
-//                    mView?.showError("No se pudo cargar la información")
-//                } else {
-//                    mView?.updateHistory(filterHistory(response, profile))
-//                }
-//            }
+        uiScope.launch {
+            mView?.showHistory(view, null)
+            val historyEntryList = async(bgDispatcher) {
+                db.historyDao().getHistoryList(profile.id)
+            }
+            mView?.updateHistory(historyEntryList.await())
         }
     }
 
-    fun prepareAssistance(view: View) {
-        mView?.showLoading()
-        mView?.getContext()?.let {
-            val cachedAssistance = ModelStorage.getAssistanceList(it)
-            mView?.showAssistance(view, filterAssistance(cachedAssistance, profile))
-//            Api.getAssistanceList(it) { response, error ->
-//                mView?.hideLoading()
-//                if (error != null) {
-//                    mView?.showError("No se pudo cargar la información")
-//                } else {
-//                    mView?.updateAssistance(filterAssistance(response, profile))
-//                }
-//            }
-        }
-    }
-
-    fun prepareVoting(view: View) {
-        mView?.showLoading()
-        mView?.getContext()?.let {
-            val cachedVoting = filterVoting(ModelStorage.getVotingList(it), profile)
-            mView?.showVoting(view, cachedVoting)
-//            Api.getVotingList(it) { response, error ->
-//                mView?.hideLoading()
-//                if (error != null) {
-//                    mView?.showError("No se pudo cargar la información")
-//                } else {
-//                    mView?.updateVoting(filterVoting(response, profile))
-//                }
-//            }
-        }
-    }
 
     fun filterHistory(list: List<HistoryEntry>?, profile: Profile?): List<HistoryEntry>? {
         return list

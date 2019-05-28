@@ -25,4 +25,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ElectionType" />
+    <style name="ElectionType.HeaderText">
+        <item name="android:textColor">#fff</item>
+
+    </style>
+
 </resources>

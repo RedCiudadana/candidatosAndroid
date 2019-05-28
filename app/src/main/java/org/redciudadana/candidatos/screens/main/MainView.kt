@@ -17,6 +17,7 @@ interface MainView : ActivityView {
     fun showMunicipalities(department: String)
     fun showCongressData()
     fun showNews()
+    fun showElectionProcess()
     fun setOnBackListener(listener: () -> Boolean)
 
     companion object {

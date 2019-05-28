@@ -1,52 +1,37 @@
 {
   "project_info": {
-    "project_number": "1008678580528",
-    "firebase_url": "https://monitor-legislativo-211f3.firebaseio.com",
-    "project_id": "monitor-legislativo-211f3",
-    "storage_bucket": "monitor-legislativo-211f3.appspot.com"
+    "project_number": "211517585651",
+    "firebase_url": "https://candidatos-acdfa.firebaseio.com",
+    "project_id": "candidatos-acdfa",
+    "storage_bucket": "candidatos-acdfa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1008678580528:android:2209fd58ed51ecca",
+        "mobilesdk_app_id": "1:211517585651:android:2e24d39effe3de48",
         "android_client_info": {
-          "package_name": "org.redciudadana.monitorlegislativo"
+          "package_name": "org.redciudadana.candidatos"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1008678580528-meckvcmtsd9as7tu8trg8ejmi1g1q0it.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.redciudadana.monitorlegislativo",
-            "certificate_hash": "badb61522e30452e41be0e4348bdfd24965a6108"
-          }
-        },
-        {
-          "client_id": "1008678580528-7dv7d8d85jmk8ss7499tnshm8a382tge.apps.googleusercontent.com",
+          "client_id": "211517585651-eo154md7lc2ce8pdml5ibn5q719678vo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAffzRpzWKWwXODRd_ugHFP31m_xLtW-Ro"
+          "current_key": "AIzaSyASmPn9SzRq-AlgG00g7WS5T1gB1OPGGj8"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1008678580528-7dv7d8d85jmk8ss7499tnshm8a382tge.apps.googleusercontent.com",
+              "client_id": "211517585651-eo154md7lc2ce8pdml5ibn5q719678vo.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

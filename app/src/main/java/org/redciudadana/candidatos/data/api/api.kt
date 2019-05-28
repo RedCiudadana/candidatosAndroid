@@ -71,6 +71,10 @@ object Api {
         apiCall = api::getHistory
     )
 
+    suspend fun getInterviewList() = apiCallGet(
+        apiCall = api::getInterviews
+    )
+
     suspend fun getAssistanceList() = apiCallGet(
         apiCall = api::getAssistance
     )

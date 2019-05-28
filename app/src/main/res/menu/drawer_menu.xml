@@ -6,6 +6,11 @@
         android:title="@string/menu_representante"
         android:icon="@drawable/drawer_location"/>
     <item
+            android:id="@+id/drawer_election_process"
+            android:title="@string/menu_election_process"
+            android:icon="@drawable/drawer_pie"
+        />
+    <item
         android:id="@+id/drawer_news"
         android:title="Últimas noticias"
         android:icon="@drawable/drawer_twitter"/>
