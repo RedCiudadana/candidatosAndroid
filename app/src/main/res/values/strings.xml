@@ -20,6 +20,8 @@
     <!-- diputado -->
     <string name="diputado_history_year">Año</string>
     <string name="diputado_history_entity">Entidad</string>
+    <string name="profile_interview_name">Entrevista</string>
+    <string name="profile_interview_url">URL</string>
 
     <!-- election type -->
     <string name="election_type_header">¿Quiénes son mis candidatos?</string>

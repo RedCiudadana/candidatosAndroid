@@ -28,9 +28,9 @@ class DiputadoOptionsAdapter(val diputadoView: ProfileContract.View):
 
     val images = arrayListOf(
         R.drawable.icon_document_black,
-        R.drawable.icon_history_black
-//        R.drawable.icon_people_black,
-//        R.drawable.icon_check_black
+        R.drawable.icon_history_black,
+        R.drawable.icon_education,
+        R.drawable.icon_document_black
     )
 
 

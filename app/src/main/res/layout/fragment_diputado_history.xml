@@ -17,12 +17,14 @@
             android:orientation="horizontal"
             android:background="@color/colorPrimary">
             <TextView
+                android:id="@+id/column1_title"
                 style="@style/Diputado.HistoryText.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/diputado_history_year"/>
             <TextView
+                android:id="@+id/column2_title"
                 style="@style/Diputado.HistoryText.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

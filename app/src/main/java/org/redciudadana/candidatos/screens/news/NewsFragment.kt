@@ -23,9 +23,9 @@ class NewsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val timeline = SearchTimeline.Builder()
-            .query("Congreso Guatemala")
-            .query("Diputado Guatemala")
-            .query("Ley Guatemala")
+            .query("TSE Guatemala")
+            .query("elecciones guatemala")
+            .query("candidato guatemala")
             .build()
         val adapter = TweetTimelineListAdapter.Builder(context)
             .setTimeline(timeline)

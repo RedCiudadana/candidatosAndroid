@@ -8,21 +8,14 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexvasilkov.foldablelayout.UnfoldableView
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_diputado.*
-import kotlinx.android.synthetic.main.fragment_diputado_assistance.*
 import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
 import kotlinx.android.synthetic.main.fragment_diputado_history.*
-import kotlinx.android.synthetic.main.fragment_diputado_voting.*
+import kotlinx.android.synthetic.main.fragment_profile_interviews.*
 import org.redciudadana.candidatos.R
 import org.redciudadana.candidatos.data.models.*
 import org.redciudadana.candidatos.screens.main.MainView
@@ -186,13 +179,33 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
         }
     }
 
-    override fun showInterview(view: View) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showAcademicInformation(view: View, details: String) {
+        inflateIntoDetails(R.layout.fragment_diputado_general_info, "Experiencia académica", R.drawable.icon_education_white)
+        val parsedText = fromHtml(details)
+        diputado_general_info_text.text = parsedText
+        unfoldDetails(view)
     }
 
-    override fun updateInterview(interviewList: List<Interview>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    override fun showInterviews(view: View, interviewList: List<Interview>?) {
+        inflateIntoDetails(R.layout.fragment_profile_interviews, "Entrevistas / foros", R.drawable.icon_check_white)
+        context?.let {
+            val mLayoutManager = LinearLayoutManager(context)
+            val interviewAdapter= ProfileInterviewAdapter(this, mPresenter, interviewList)
+            interview_recycler.setHasFixedSize(true)
+            interview_recycler.layoutManager = mLayoutManager
+            interview_recycler.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    mLayoutManager.orientation
+                )
+            )
+            interview_recycler.adapter = interviewAdapter
+
+        }
+        unfoldDetails(view)
     }
+
 
     private fun inflateIntoDetails(layout: Int, title: String, icon: Int) {
         details_content.removeAllViews()
@@ -214,10 +227,14 @@ class ProfileFragment: BaseFragment<ProfileContract.View, ProfileContract.Presen
 
     private fun fromHtml(text: String?): CharSequence? {
         if (text == null || text.isBlank()) return "Información no disponible"
+        val htmlText = text
+            .split("\n")
+            .map { "<p>$it</p>" }
+            .joinToString("")
         return if (Build.VERSION.SDK_INT < 24) {
-            Html.fromHtml(text)
+            Html.fromHtml(htmlText)
         } else {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+            Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
         }
     }
 

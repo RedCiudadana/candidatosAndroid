@@ -5,7 +5,7 @@
 
     <application
             android:name="org.redciudadana.candidatos.Application"
-            android:allowBackup="true"
+            android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
@@ -14,7 +14,7 @@
         <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
         <activity
             android:name="org.redciudadana.candidatos.screens.splash.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

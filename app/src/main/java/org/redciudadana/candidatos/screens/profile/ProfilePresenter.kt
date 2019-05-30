@@ -7,10 +7,7 @@ import org.redciudadana.candidatos.coroutines.bgDispatcher
 import org.redciudadana.candidatos.coroutines.uiScope
 import org.redciudadana.candidatos.data.api.ModelStorage
 import org.redciudadana.candidatos.data.db.db
-import org.redciudadana.candidatos.data.models.Assistance
-import org.redciudadana.candidatos.data.models.HistoryEntry
-import org.redciudadana.candidatos.data.models.Profile
-import org.redciudadana.candidatos.data.models.Voting
+import org.redciudadana.candidatos.data.models.*
 import org.redciudadana.candidatos.screens.main.MainView
 import org.redciudadana.candidatos.utils.mvp.BasePresenter
 import org.redciudadana.candidatos.utils.openUrl
@@ -57,6 +54,8 @@ class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.
         when (position) {
             0 -> mView?.showGeneralInformation(view, profile)
             1 -> prepareHistoryAndShow(view)
+            2 -> prepareAcademicInformationAndShow(view)
+            3 -> prepareInterviewAndShow(view)
         }
     }
 
@@ -103,6 +102,25 @@ class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.
         }
     }
 
+    fun prepareAcademicInformationAndShow(view: View) {
+        uiScope.launch {
+            mView?.showAcademicInformation(view, profile.profileInfo?.experienciaAcademica ?: "Información no disponible")
+        }
+    }
+
+    fun prepareInterviewAndShow(view: View) {
+        uiScope.launch {
+            val interviews = async(bgDispatcher) {
+                db.interviewDao().getInterviews(profile.id)
+            }
+            mView?.showInterviews(view, interviews.await())
+        }
+    }
+
+    override fun showInterview(interview: Interview) {
+        openUrlOnClick(interview.url)
+    }
+
 
     fun filterHistory(list: List<HistoryEntry>?, profile: Profile?): List<HistoryEntry>? {
         return list
@@ -110,19 +128,5 @@ class DiputadoPresenter: BasePresenter<ProfileContract.View>(), ProfileContract.
             ?.filter { it.perfil == profile?.id }
     }
 
-    fun filterAssistance(assistance: List<Assistance>?, profile: Profile?): Assistance? {
-        return assistance
-            ?.filter { it.perfilId == profile?.id }
-            ?.firstOrNull()
-    }
-
-    fun filterVoting(votingList: List<Map<String, String>>?, profile: Profile?): List<Voting>? {
-        return votingList
-            ?.filter { it.get("perfilId") == profile?.id }
-            ?.firstOrNull()
-            ?.toList()
-            ?.filter { it.first != "perfilId" }
-            ?.map { Voting(it.first, it.second) }
-    }
 
 }
